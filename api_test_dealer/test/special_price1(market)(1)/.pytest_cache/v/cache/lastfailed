@@ -1,0 +1,4 @@
+{
+  "test_a_special_submit.py::TestSpecialPrice::test_get_pid_tid": true,
+  "test_i_special_update_allpass.py::TestSpecialPrice::test_z_get_update_date": true
+}

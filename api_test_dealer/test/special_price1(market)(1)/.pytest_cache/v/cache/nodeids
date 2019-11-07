@@ -1,0 +1,12 @@
+[
+  "test_g_special_submit_direct1_dis.py::TestSpecialPrice::test_a_special_submit",
+  "test_g_special_submit_direct1_dis.py::TestSpecialPrice::test_b_bazaar_agree",
+  "test_g_special_submit_direct1_dis.py::TestSpecialPrice::test_c_settlement",
+  "test_g_special_submit_direct1_dis.py::TestSpecialPrice::test_d_settlement",
+  "test_g_special_submit_direct1_dis.py::TestSpecialPrice::test_e_market",
+  "test_g_special_submit_direct1_dis.py::TestSpecialPrice::test_f_principal",
+  "test_g_special_submit_direct1_dis.py::TestSpecialPrice::test_g_majordomo",
+  "test_g_special_submit_direct1_dis.py::TestSpecialPrice::test_h_principal",
+  "test_g_special_submit_direct1_dis.py::TestSpecialPrice::test_i_majordomo",
+  "test_g_special_submit_direct1_dis.py::TestSpecialPrice::test_j_majordomo"
+]

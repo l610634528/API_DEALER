@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>经销商审批</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">经销商审批</h1>
+<p class='attribute'><strong>测试人员 : </strong> lv and wang</p>
+<p class='attribute'><strong>开始时间 : </strong> 2019-11-04 16:09:10</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:24.941167</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 30，通过 7，错误 23，通过率= 23.33%</p>
+
+<p class='description'>测试描述</p>
+</div>
+
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 23.33% }</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 0 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 7 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 30 }</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>user_continue.test_a_续签_全部同意.TestRenew</td>
+    <td class="text-center">7</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">5</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',7)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_market_submit</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse in">
+    <pre>
+    
+pt1_1: Assertion test fail. 400 != 10000
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_b_first_trial_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_2'>错误</button>
+    <div id='div_ft1_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_2'>错误</button>
+    <div id='div_ft1_2' class="collapse in">
+    <pre>
+    
+ft1_2: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_a_续签_全部同意.py", line 78, in test_b_first_trial_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_3' class='none'>
+    <td class='errorCase'><div class='testcase'>test_c_recheck_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_3'>错误</button>
+    <div id='div_ft1_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_3'>错误</button>
+    <div id='div_ft1_3' class="collapse in">
+    <pre>
+    
+ft1_3: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_a_续签_全部同意.py", line 101, in test_c_recheck_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_4' class='none'>
+    <td class='errorCase'><div class='testcase'>test_d_market_leader_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_4'>错误</button>
+    <div id='div_ft1_4' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_4'>错误</button>
+    <div id='div_ft1_4' class="collapse in">
+    <pre>
+    
+ft1_4: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_a_续签_全部同意.py", line 125, in test_d_market_leader_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_5' class='none'>
+    <td class='errorCase'><div class='testcase'>test_e_principal_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_5'>错误</button>
+    <div id='div_ft1_5' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_5'>错误</button>
+    <div id='div_ft1_5' class="collapse in">
+    <pre>
+    
+ft1_5: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_a_续签_全部同意.py", line 148, in test_e_principal_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_6' class='none'>
+    <td class='errorCase'><div class='testcase'>test_f_leader_one_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_6'>错误</button>
+    <div id='div_ft1_6' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_6'>错误</button>
+    <div id='div_ft1_6' class="collapse in">
+    <pre>
+    
+ft1_6: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_a_续签_全部同意.py", line 172, in test_f_leader_one_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_g_leader_two_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_7'>通过</button>
+    <div id='div_pt1_7' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_7'>通过</button>
+    <div id='div_pt1_7' class="collapse in">
+    <pre>
+    
+pt1_7: Assertion test fail. 400 != 10000
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>user_continue.test_b_续签各个节点审核不同意.TestRenew</td>
+    <td class="text-center">23</td>
+    <td class="text-center">5</td>
+    <td class="text-center">0</td>
+    <td class="text-center">18</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',23)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_market_submit</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse in">
+    <pre>
+    
+pt2_1: Assertion test fail. 400 != 10000
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_b_first_trial_disagree</div></td>
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+</tr>
+
+<tr id='pt2_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_c_market_submit_again</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse in">
+    <pre>
+    
+pt2_3: Assertion test fail. 400 != 10000
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_4' class='none'>
+    <td class='errorCase'><div class='testcase'>test_d_first_trial_again</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_4'>错误</button>
+    <div id='div_ft2_4' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_4'>错误</button>
+    <div id='div_ft2_4' class="collapse in">
+    <pre>
+    
+ft2_4: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 110, in test_d_first_trial_again
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_5' class='none'>
+    <td class='errorCase'><div class='testcase'>test_e_recheck_disagree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_5'>错误</button>
+    <div id='div_ft2_5' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_5'>错误</button>
+    <div id='div_ft2_5' class="collapse in">
+    <pre>
+    
+ft2_5: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 133, in test_e_recheck_disagree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_6' class='none'>
+    <td class='errorCase'><div class='testcase'>test_f_first_trial_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_6'>错误</button>
+    <div id='div_ft2_6' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_6'>错误</button>
+    <div id='div_ft2_6' class="collapse in">
+    <pre>
+    
+ft2_6: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 156, in test_f_first_trial_again_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_7' class='none'>
+    <td class='errorCase'><div class='testcase'>test_g_recheck_agagin_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_7'>错误</button>
+    <div id='div_ft2_7' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_7'>错误</button>
+    <div id='div_ft2_7' class="collapse in">
+    <pre>
+    
+ft2_7: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 179, in test_g_recheck_agagin_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_8' class='none'>
+    <td class='errorCase'><div class='testcase'>test_h_market_leader_disagree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_8'>错误</button>
+    <div id='div_ft2_8' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_8'>错误</button>
+    <div id='div_ft2_8' class="collapse in">
+    <pre>
+    
+ft2_8: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 203, in test_h_market_leader_disagree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_9' class='none'>
+    <td class='errorCase'><div class='testcase'>test_i_first_trial_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_9'>错误</button>
+    <div id='div_ft2_9' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_9'>错误</button>
+    <div id='div_ft2_9' class="collapse in">
+    <pre>
+    
+ft2_9: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 226, in test_i_first_trial_again_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_10' class='none'>
+    <td class='errorCase'><div class='testcase'>test_j_recheck_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_10'>错误</button>
+    <div id='div_ft2_10' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_10'>错误</button>
+    <div id='div_ft2_10' class="collapse in">
+    <pre>
+    
+ft2_10: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 249, in test_j_recheck_again_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_11' class='none'>
+    <td class='errorCase'><div class='testcase'>test_k_market_leader_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_11' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_11'>错误</button>
+    <div id='div_ft2_11' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_11' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_11'>错误</button>
+    <div id='div_ft2_11' class="collapse in">
+    <pre>
+    
+ft2_11: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 273, in test_k_market_leader_again_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_12' class='none'>
+    <td class='errorCase'><div class='testcase'>test_l_principal_disagree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_12' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_12'>错误</button>
+    <div id='div_ft2_12' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_12' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_12'>错误</button>
+    <div id='div_ft2_12' class="collapse in">
+    <pre>
+    
+ft2_12: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 296, in test_l_principal_disagree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_13' class='none'>
+    <td class='errorCase'><div class='testcase'>test_m_first_trial_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_13' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_13'>错误</button>
+    <div id='div_ft2_13' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_13' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_13'>错误</button>
+    <div id='div_ft2_13' class="collapse in">
+    <pre>
+    
+ft2_13: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 319, in test_m_first_trial_again_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_14' class='none'>
+    <td class='errorCase'><div class='testcase'>test_n_recheck_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_14' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_14'>错误</button>
+    <div id='div_ft2_14' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_14' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_14'>错误</button>
+    <div id='div_ft2_14' class="collapse in">
+    <pre>
+    
+ft2_14: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 342, in test_n_recheck_again_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_15' class='none'>
+    <td class='errorCase'><div class='testcase'>test_o_market_leader_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_15' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_15'>错误</button>
+    <div id='div_ft2_15' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_15' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_15'>错误</button>
+    <div id='div_ft2_15' class="collapse in">
+    <pre>
+    
+ft2_15: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 366, in test_o_market_leader_again_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_16' class='none'>
+    <td class='errorCase'><div class='testcase'>test_p_principal_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_16' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_16'>错误</button>
+    <div id='div_ft2_16' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_16' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_16'>错误</button>
+    <div id='div_ft2_16' class="collapse in">
+    <pre>
+    
+ft2_16: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 389, in test_p_principal_again_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_17' class='none'>
+    <td class='errorCase'><div class='testcase'>test_q_leader_one_disagree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_17' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_17'>错误</button>
+    <div id='div_ft2_17' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_17' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_17'>错误</button>
+    <div id='div_ft2_17' class="collapse in">
+    <pre>
+    
+ft2_17: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 413, in test_q_leader_one_disagree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_18' class='none'>
+    <td class='errorCase'><div class='testcase'>test_r_principal_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_18' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_18'>错误</button>
+    <div id='div_ft2_18' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_18' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_18'>错误</button>
+    <div id='div_ft2_18' class="collapse in">
+    <pre>
+    
+ft2_18: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 436, in test_r_principal_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_19' class='none'>
+    <td class='errorCase'><div class='testcase'>test_s_leader_one_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_19' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_19'>错误</button>
+    <div id='div_ft2_19' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_19' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_19'>错误</button>
+    <div id='div_ft2_19' class="collapse in">
+    <pre>
+    
+ft2_19: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 460, in test_s_leader_one_again_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_20' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_t_leader_two_disagree</div></td>
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+</tr>
+
+<tr id='ft2_21' class='none'>
+    <td class='errorCase'><div class='testcase'>test_u_principal_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_21' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_21'>错误</button>
+    <div id='div_ft2_21' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_21' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_21'>错误</button>
+    <div id='div_ft2_21' class="collapse in">
+    <pre>
+    
+ft2_21: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 501, in test_u_principal_again_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_22' class='none'>
+    <td class='errorCase'><div class='testcase'>test_v_leader_one_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_22' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_22'>错误</button>
+    <div id='div_ft2_22' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_22' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_22'>错误</button>
+    <div id='div_ft2_22' class="collapse in">
+    <pre>
+    
+ft2_22: Traceback (most recent call last):
+  File "F:\api_test_dealer\api_test_dealer\test\user_continue\test_b_续签各个节点审核不同意.py", line 525, in test_v_leader_one_again_agree
+    res_reason = res_text['data']['result']['reason']
+TypeError: 'NoneType' object is not subscriptable
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_23' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_w_leader_two_again_agree</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_23' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_23'>通过</button>
+    <div id='div_pt2_23' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_23' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_23'>通过</button>
+    <div id='div_pt2_23' class="collapse in">
+    <pre>
+    
+pt2_23: Assertion test fail. 400 != 10000
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>30</td>
+    <td>7</td>
+    <td>0</td>
+    <td>23</td>
+    <td>通过率：23.33%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+
+</body>
+</html>
